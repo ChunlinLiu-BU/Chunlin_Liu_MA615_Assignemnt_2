@@ -1,1 +1,710 @@
 # Chunlin_Liu_MA615_Assignemnt_2
+
+---
+title: "MSSP Assignment 2"
+author: "Chunlin Liu"
+date: "2025-09-13"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+## Exercise 1. Vector
+
+### question 1
+
+```{r}
+p_1a <- 1:20
+print(p_1a)
+p_1b <- 20:1
+print(p_1b)
+p_1c <- c(1:20,19:1)
+print(p_1c)
+tmp <- c(4,6,3)
+print(tmp)
+p_1e <- rep(tmp,10)
+print(p_1e)
+p_1f <- rep(tmp, l=31)
+print(p_1f)
+p_1g <- rep(tmp, times=c(10,20,30))
+print(p_1g)
+```
+
+### question 2
+
+```{r}
+library(base)
+library(graphics)
+x <- seq(3, 6, by=0.1)
+p_2 <- exp(x)*cos(x)
+print(p_2)
+```
+
+### question 3
+
+```{r}
+options(scipen = 0)
+p_3a <- (0.1^seq(3,36,by=3))*(0.2^seq(1,34,by=3))
+p_3a
+
+n <- 1:25
+p_3b <- (2^n)/n
+print(p_3b)
+```
+
+### question 4
+
+```{r}
+p_4x <- 10:100
+p_4x^3 + 4*p_4x^2
+print(sum(p_4x^3 + 4*p_4x^2))
+
+p_4y <- 1:25
+(2^p_4y)/p_4y + (3^p_4y)/(p_4y)^2
+print(sum((2^p_4y)/p_4y + (3^p_4y)/(p_4y)^2))
+```
+
+### question 5
+
+```{r}
+label_vector <- paste("label", 1:30)
+print(label_vector)
+
+fn_vector <- paste("fn", 1:30)
+print(fn_vector)
+```
+
+### question 6
+
+```{r}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+
+n <- 250
+print(n)
+p_6a <- yVec[2:n] - xVec[1:(n-1)]
+p_6b <- sin(yVec[1:(n-1)]) / cos(xVec[2:n])
+p_6c <- xVec[1:(n-2)] + 2*xVec[2:(n-1)] - xVec[3:n]
+p_6d <- sum( exp(-xVec[2:n]) / (xVec[1:(n-1)] + 10) )
+```
+
+```{r}
+p_7a <- yVec[yVec > 600]
+p_7b <- which(yVec >600)
+p_7c <- xVec[yVec > 600]
+x_mean <- mean(xVec)
+p_7d <- sqrt(abs(xVec - x_mean))
+y_max <- max(yVec)
+p_7e <- sum(yVec >= (y_max - 200))
+p_7f <- sum(xVec %% 2 == 0)
+p_7g <- xVec[order(yVec)]
+p_7seq <- seq(1, n, by=3)
+p_7h <- yVec[p_7seq]
+
+
+```
+
+### question 8
+
+```{r}
+seq(2,38,b=2)
+seq(3,39,b=2)
+seq(2,38,b=2)/seq(3,39,b=2)
+cumprod(seq(2,38,b=2)/seq(3,39,b=2))
+sum(cumprod(seq(2,38,b=2)/seq(3,39,b=2)))
+1+sum(cumprod(seq(2,38,b=2)/seq(3,39,b=2)))
+
+```
+
+## Exercise 2. Matrics
+
+### question 1
+
+```{r}
+p_1a <- matrix(c(1, 5, -2, 1, 2, -1, 3, 6, -3), nrow = 3, ncol = 3, byrow = FALSE)
+print(p_1a)
+p_1a3 <- p_1a %*% p_1a %*% p_1a
+print(p_1a3)
+
+
+```
+
+Thus, the A^3 matrix is a 3 x 3 matrix with every entry equal to 0.
+
+```{r}
+p_1a[, 3] <- p_1a[, 2] + p_1a[, 3]
+print(p_1a)
+
+```
+
+### question2
+
+```{r}
+p_2a <- matrix (c(10, -10, 10), nrow = 15, ncol = 3, byrow = TRUE)
+print(p_2a)
+BTB <- crossprod (p_2a)
+print(BTB)
+
+```
+
+### question 3
+
+```{r}
+matE <- matrix(0, nrow = 6, ncol = 6)
+print(matE)
+print(row(matE))
+print(col(matE))
+
+matE_new <- matrix(0, nrow = 6, ncol = 6)
+matE_new[abs(row(matE_new) - col(matE_new)) == 1] <- 1
+print(matE_new)
+
+```
+
+### question 4
+
+```{r}
+
+row <- 0:4
+column <- 0:4
+p_4a <- outer (row, column, FUN = "+")
+print(p_4a)
+
+```
+
+
+### question 5
+
+```{r}
+
+n1 <- 5
+p_5a <- matrix(0, n, n)
+p_5a <- outer(0:(n1-1), 0:(n1-1), function(i, j) (i + j) %% n1)
+print(p_5a)
+
+n2 <-10
+p_5b <- outer (0:(n2-1), 0:(n2-1), function (i,j)(i+j) %% n2)
+print(p_5b)
+
+n3 <- 9
+p_5c <- outer (0:(n3-1), 0:(n3-1), function (i,j)(i-j) %% n3)
+print(p_5c)
+
+```
+
+### question 6
+
+```{r}
+n1 <- 5
+p_6a <- outer(1:n1, 1:n1, function(i, j) abs(i - j) + 1)
+print(p_6a)
+y <- c(7, -1, -3, 5, 17)
+solution <- solve(p_6a, y)
+print(solution)
+
+```
+
+### question 7
+
+```{r}
+set.seed(75)
+aMat <- matrix( sample(10, size=60, replace=T), nr=6)
+p_7row <- apply(aMat, 1, function(x) sum(x > 4))
+print(p_7row)
+p_7_sevens <- which(apply(aMat, 1, function(x) sum(x==7)) ==2)
+print(p_7_sevens)
+
+```
+
+### question 8
+
+```{r}
+i1 <- 1:20
+j1 <- 1:5
+p_8A <- sum(1/(3+j1))
+p_8a <- sum((i1^4) * p_8A)
+print(p_8a)
+
+
+p_8B <- sum(1/(3+i1*j1))
+p_8b <- sum((i1^4) * p_8B)
+print(p_8b)
+
+i2 <- 1:10
+j2 <- 1:i2
+
+p_8C <- sum(1/(3+i2*j2))
+p_8c <- sum((i2^4) * p_8C)
+print(p_8c)
+
+
+```
+
+
+## Exercise 3
+
+### question 1
+
+```{r}
+tampFn1 <- function (xVec) {
+  n <- length(xVec)
+  return(xVec ^ (1:n))
+}
+
+tampFn2 <- function (xVec) {
+  n <- length(xVec)
+  return(xVec ^ (1:n) / (1:n))
+}
+
+tampFn3 <- function (xVec){
+  n <- length(xVec)
+  return(xVec^(1:n-1))/ (0:n)
+}
+
+```
+
+### questiopn 2
+
+```{r}
+
+a = c(1:5,6:1)
+
+n <- length(a)
+a[-c(n-1,n)]
+
+tmpFn <- function(a){
+  n = length(a)
+  mva= (a[-c(n-1,n)] + a[-c(1,n)] + a[-c(1,2)])/3
+  return(mva)
+}
+
+print(tmpFn(a))
+
+
+
+```
+
+### question 3
+
+```{r}
+tampFn <- function(xVec) {
+  ifelse(xVec < 0, xVec^2 + 2*xVec + 3,
+         ifelse(xVec < 2, xVec + 3,
+                xVec^2 + 4*xVec - 7))
+}
+
+x <- seq(-3, 3, by = 0.01)
+y <- tampFn(x)
+
+plot(x, y, type = "l", col = "black", 
+     main = "Plot of f(x)", xlab = "x", ylab = "f(x)")
+
+
+```
+
+### question 4
+
+```{r}
+p_4a <- matrix(c(1, 5, -2, 1, 2, -1, 3, 6, -3), nrow = 3, byrow = FALSE)
+print(p_4a)
+
+tmpFn <- function(mat){
+  if(!is.matrix(mat)) stop("Input is not a matrix")
+  mat[mat%%2 == 1] <- 2*mat[mat%%2 == 1]
+  return(mat)
+}
+
+A <- matrix(c(1,1,3,5,2,6,-2,-1, -3), nrow = 3, byrow = T)
+
+print(tmpFn(A))
+```
+
+### question 5
+
+```{r}
+
+n <- 5
+k <- 2
+
+p_5a <- matrix(0, nrow = n, ncol = n)
+diag(p_5a) <- k
+diag(mat[1:(n-1), 2:n]) <- 1
+diag(mat[2:n, 1:(n-1)]) <- 1
+
+print(p_5a)
+
+p_5Matrix <- function(n, k){
+  p_5b <- diag(k, n)
+  if (n > 1){
+    mat[1:(n-1), 2:n] <- 1
+    mat[2:n, 1:(n-1)] <- 1
+  }
+  return(p_5b)
+}
+print(p_5Matrix)
+
+
+
+```
+
+### question 6
+
+```{r}
+p_6a <- function(alpha) {
+  # Normalize the angle to [0, 360)
+  alpha_real <- alpha %% 360
+  
+  # Determine quadrant
+  if (alpha_real < 90) {
+    return(1)
+  } else if (alpha_real < 180) {
+    return(2)
+  } else if (alpha_real < 270) {
+    return(3)
+  } else {
+    return(4)
+  }
+}
+
+
+```
+
+### question 7
+
+```{r}
+weekday <- function(day, month, year) {
+  if (month %in% c(1, 2)) {
+    month <- month + 10
+    year <- year - 1
+  } else {
+    month <- month - 2
+  }
+  k <- day
+  y <- year %% 100
+  c <- floor(year / 100)
+  m <- month
+  f <- (floor(2.6 * m - 0.2) + k + y + floor(y / 4) + floor(c / 4) - 2 * c) %% 7
+  if (f <= 0) {
+    f <- f + 7
+  }
+  
+  return(f)
+}
+
+p_7b <- function(day, month, year) {
+  if (length(day) != length(month) || length(day) != length(year)) {
+    stop()
+  }
+  
+  adjust_mask <- month %in% c(1, 2)
+  month_adj <- ifelse(adjust_mask, month + 10, month - 2)
+  year_adj <- ifelse(adjust_mask, year - 1, year)
+  
+  k <- day
+  y <- year_adj %% 100
+  c <- floor(year_adj / 100)
+  m <- month_adjusted
+  f <- (floor(2.6 * m - 0.2) + k + y + floor(y / 4) + floor(c / 4) - 2 * c) %% 7
+  f <- ifelse(f <= 0, f + 7, f)
+  return(f)
+}
+
+
+```
+
+
+### question 8
+
+```{r}
+testloop <- function(n){
+  if(n<4)stop("n must be an integer > 3")
+  browser()
+  x = rep(NA, n-1)
+  x[1] = 1
+  x[2] = 2
+  
+  for(j in 3:(n-1)){x[j] = x[j-1] + 2/x[j-1]
+  }
+  return(x)
+}
+
+testloop(5)
+
+
+testloop2 <- function(yVec) {
+  n <- length(yVec)
+  e <- rep(NA, n)
+  e[1] <- yVec[1] 
+  for(j in 2:n) {
+    e[j] <- e[j-1] + 2 / e[j-1] 
+  }
+  
+  return(sum(e))
+}
+
+
+```
+
+
+### question 9
+
+```{r}
+quadmap <- function(start, rho, niter) {
+  x <- numeric(niter)
+  x[1] <- start
+  for (i in 2:niter) {
+    x[i] <- rho * x[i-1] * (1 - x[i-1])
+  }
+  
+  return(x)
+}
+
+tmp <- quadmap(start = 0.95, rho = 2.99, niter = 500)
+
+plot(tmp, type = "l", main = "Quadratic Map (rho=2.99)", xlab = "Iteration", ylab = "x_n")
+plot(tmp[300:500], type = "l", main = "Last 200 iterations", xlab = "Iteration (300-500)", ylab = "x_n")
+
+
+p_9b <- function(start, rho, tolerance = 0.02) {
+  x_prev <- start
+  x_current <- rho * start * (1 - start)
+  iterations <- 1
+  while (abs(x_current - x_prev) >= tolerance) {
+    x_previous <- x_current
+    x_current <- rho * x_previous * (1 - x_previous)
+    iterations <- iterations + 1
+    if (iterations > 1000) {
+      break
+    }
+  }
+  
+  return(iterations)
+}
+
+
+```
+
+
+### question 10
+
+```{r}
+tmpFn <- function(xVec) {
+  n <- length(xVec)
+  x_mean <- mean(xVec)
+  denominator <- sum((xVec - x_mean)^2)
+  numerator_r1 <- sum((xVec[2:n] - x_mean) * (xVec[1:(n-1)] - x_mean))
+  r1 <- numerator_r1 / denominator
+  numerator_r2 <- sum((xVec[3:n] - x_mean) * (xVec[1:(n-2)] - x_mean))
+  r2 <- numerator_r2 / denominator
+  
+  return(list(r1 = r1, r2 = r2))
+}
+
+
+xVec <- seq(2, 56, by = 3)
+p_10a <- tmpFn(xVec)
+print(p_10a)
+
+
+
+p_10b <- function(xVec, k) {
+  n <- length(xVec)
+  x_mean <- mean(xVec)
+  denominator <- sum((xVec - x_mean)^2)
+  result <- numeric(k + 1)
+  result[1] <- 1  
+  
+  for (lag in 1:k) {
+    numerator <- sum((xVec[(lag+1):n] - x_mean) * (xVec[1:(n-lag)] - x_mean))
+    result[lag + 1] <- numerator / denominator
+  }
+  
+  return(result)
+}
+
+
+```
+
+
+## Exercise 4
+
+### question 1
+
+```{r}
+
+set.seed(50)
+x <- as.integer(runif(5, 1, 5))
+y <- as.integer(runif(6, 2, 4))
+
+z <- outer(y, x, "<")
+colSums(z)
+
+f_1a <- function(x, y){
+  z = colSums(outer(y,x,"<"))
+  return(z)
+}
+
+f_1a(x,y)
+
+f_1b <- function(x,y){
+  rowSums(sapply(y, FUN=function(y){y < x}))
+}
+
+f_1b(x,y)
+
+f_1c <- function(x,y){
+
+  rowSums(vapply(y, FUN=function(y){y<x}, 
+       FUN.VALUE = (along=x)))
+}
+
+f_1c(x,y)
+
+set.seed(53)
+x1 <- rnorm(10010)
+y1 <- rnorm(10020)
+
+system.time(f_1a(x1,y1))
+system.time(f_1b(x1,y1))
+system.time(f_1c(x1,y1))
+
+
+nums <- 1:5
+out <- lapply(nums, function(x) x^2)
+print(out)
+nums <- 1:5
+out <- sapply(nums, function(x) x^2)
+print(out)
+
+
+
+
+
+
+
+```
+If one or more of the arguments is a vector with length of 0, the function will fail.
+
+If the arguments are matrix, the R is going to change it into vector. 
+
+According to teh result, outer function seems to be the fastest. 
+
+
+### question 2
+
+```{r}
+noNAclos <- function(mat){
+  mat[, columns(is.na(mat) == 0, drop = FALSE)]
+}
+
+
+removeNArowscols <- function(mat) {
+  keep_rows <- rowSums(is.na(mat)) == 0
+  keep_cols <- colSums(is.na(mat)) == 0
+  mat[keep_rows, keep_cols, drop = FALSE]
+}
+
+
+```
+
+### question 3
+
+```{r}
+
+
+x <- c(7, 3, 1, 4)
+y <- c(2, 5, 1, 3)
+
+
+empCopula <- function(u, v, xVec, yVec) {
+  n <- length(xVec)
+  r <- rank(xVec)
+  s <- rank(yVec)
+  indicators <- (r / (n + 1) <= u) & (s / (n + 1) <= v)
+  sum(indicators) / n
+}
+
+
+empCopula(0.5, 0.5, x, y)
+
+
+
+empCopula_b <- function(u, v, xVec, yVec) {
+  if(length(u) != length(v)) stop()
+  n <- length(xVec)
+  r <- rank(xVec)
+  s <- rank(yVec)
+  C_vals <- numeric(length(u))
+  for(i in seq_along(u)) {
+    C_vals[i] <- sum((r / (n + 1) <= u[i]) & (s / (n + 1) <= v[i])) / n
+  }
+  C_vals
+}
+
+empCopula_b(0.5, 0.5, x, y)
+
+
+```
+
+
+### question 4
+
+
+```{r}
+functionA <- function(n) {
+  total <- 0
+  for(r in 1:n) {
+    for(s in 1:r) {
+      total <- total + (10 + 4*r^3)
+    }
+  }
+  total
+}
+
+
+functionB <- function(n) {
+  mat <- row(matrix(0, n, n))
+  mat[mat < col(mat)] <- 0
+  mat[mat >= col(mat)] <- mat[mat >= col(mat)]
+  mat <- mat[mat > 0]
+  sum(10 + 4 * mat^3)
+}
+
+
+functionC <- function(n) {
+  r <- 1:n
+  s <- 1:n
+  mat <- outer(r, s, function(r,s) ifelse(s <= r, 10 + 4*r^3, 0))
+  sum(mat)
+}
+
+
+single_argument <- function(r) {
+  sum(10 + 4*r^3 * rep(1, r))
+}
+
+functionD <- function(n) {
+  sum(sapply(1:n, single_argument))
+}
+
+
+term <- function(r,s) {
+  if(s <= r) 10 + 4*r^3 
+  else 0
+}
+
+functionF <- function(n) {
+  r <- 1:n
+  s <- 1:n
+  sum(mapply(term, rep(r, each=n), rep(s, times=n)))
+}
+system.time(functionA(n))
+system.time(functionB(n))
+system.time(functionC(n))
+system.time(functionD(n))
+system.time(functionF(n))
+
+
+
+```
