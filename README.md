@@ -706,5 +706,176 @@ system.time(functionD(n))
 system.time(functionF(n))
 
 
+```
+
+
+
+According to rhe system time, function C is the fastest.
+
+
+### question 5
+
+```{r}
+
+queue <- function(n, aRate, sRate){
+  A <- rexp(n, rate = aRate)
+  S <- rexp(n, rate = sRate)
+  W <- numeric(n+1)
+  for (j in 1:n){
+    W[j + 1] <- max(0, W[j] +S[j] - A [j])
+  }
+  W[n + 1]
+}
+
+set.seed(1)
+queue(50, 2, 2)
+
+queueLoop <- function(n, aRate, sRate, reps = 1000) {
+  out <- numeric(reps)
+  for (i in 1:reps) {
+    out[i] <- queue(n, aRate, sRate)
+  }
+  out
+}
+queueRep <- function(n, aRate, sRate, reps = 1000) {
+  replicate(reps, queue(n, aRate, sRate))
+}
+
+
+system.time(queueLoop(50, 2, 2, 10000))
+system.time(queueRep(50, 2, 2, 10000))
+
+
+queueVec <- function(n, aRate, sRate){
+  D <- rexp(n, rate = sRate)-rexp(n, rate = aRate)
+  function(prev, d) mac(0, )
+}
+
+
+
+queueVec <- function(n, aRate, sRate) {
+  D <- rexp(n, rate = sRate) - rexp(n, rate = aRate)
+  
+  W <- Reduce(
+    function(prev, d) max(0, prev + d),
+    D, init = 0, accumulate = TRUE
+  )
+  
+  tail(W, 1)
+}
+system.time(replicate(10000, queueVec(50, 2, 2)))
+
+
+
 
 ```
+
+### question 6
+
+
+```{r}
+set.seed(123) 
+# rwalk(n): returns positions S0,...,Sn
+rwalk <- function(n) {
+  steps <- sample(c(-1, 1), n, replace = TRUE, prob = c(0.5, 0.5))
+  positions <- c(0, cumsum(steps))  # include S0=0
+  return(positions)
+}
+
+rwalk(10)
+
+
+
+set.seed(123)
+n <- 50
+path <- rwalk(n)
+
+plot(0:n, path, type = "o", pch = 16, col = "blue",
+     xlab = "Step", ylab = "Position",
+     main = "Random Walk (Single Path)")
+abline(h = 0, col = "red", lty = 2)
+
+
+rwalkPos <- function(n) {
+  path <- rwalk(n)
+  time_above <- sum(path[-(n+1)] > 0)
+  return(time_above)
+}
+
+
+
+rwalkPos1 <- function(nReps, n) {
+  out <- numeric(nReps)
+  for (i in 1:nReps) {
+    out[i] <- rwalkPos(n)
+  }
+  return(out)
+}
+
+
+rwalkPos2 <- function(nReps, n) {
+  replicate(nReps, rwalkPos(n))
+}
+
+
+system.time(res1 <- rwalkPos1(10000, 100))
+system.time(res2 <- rwalkPos2(10000, 100))
+
+
+```
+
+
+In previous question, using vector approach could do the math on whole vectors at once. This means that we can skip some steps. However, in this situation, it is a chain, where wecannot skip. 
+
+
+
+## Exercise 5 (extra)
+
+### question 2
+
+```{r}
+myListFn <- function(n){
+set.seed(52)
+x<- rnorm(x)
+xbar <- mean(x)
+y = sign(xbar)*rexp(n, rate = abs(1/xbar))
+count <- sum(abs(y)>abs(x))
+z <- list (x=x, y=y, count = count)
+return(z)
+}
+out <- myListFn(1000)
+
+```
+
+
+### question 4
+
+```{r}
+
+ttestFn <- function(arr) {
+  d1 <- dim(arr)[1]
+  d2 <- dim(arr)[2]
+  d3 <- dim(arr)[3]
+  
+  w <- array(0, dim=c(d1,d2,d3))
+  for(k in 1:d3){
+    for(j in 1:d2){
+      w[,j,k] <- arr[,j,k] - min(arr[,j,k])
+    }
+  }
+  
+
+  
+  
+  z <- matrix(0, nrow=d2, ncol=d3)
+  for(k in 1:d3){
+    for(j in 1:d2){
+      z[j,k] <- sum(arr[,j,k]) - max(arr[,j,k])
+    }
+  }
+  
+  return(list(w=w, z=z))
+}
+
+```
+
