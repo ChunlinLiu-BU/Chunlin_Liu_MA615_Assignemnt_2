@@ -328,16 +328,17 @@ k <- 2
 
 p_5a <- matrix(0, nrow = n, ncol = n)
 diag(p_5a) <- k
-diag(mat[1:(n-1), 2:n]) <- 1
-diag(mat[2:n, 1:(n-1)]) <- 1
+diag(p_5a[1:(n-1), 2:n]) <- 1
+diag(p_5a[2:n, 1:(n-1)]) <- 1
 
 print(p_5a)
+
 
 p_5Matrix <- function(n, k){
   p_5b <- diag(k, n)
   if (n > 1){
-    mat[1:(n-1), 2:n] <- 1
-    mat[2:n, 1:(n-1)] <- 1
+    matrix[1:(n-1), 2:n] <- 1
+    matrix[2:n, 1:(n-1)] <- 1
   }
   return(p_5b)
 }
@@ -428,7 +429,7 @@ testloop <- function(n){
   return(x)
 }
 
-testloop(5)
+
 
 
 testloop2 <- function(yVec) {
@@ -441,7 +442,6 @@ testloop2 <- function(yVec) {
   
   return(sum(e))
 }
-
 
 ```
 
@@ -461,8 +461,8 @@ quadmap <- function(start, rho, niter) {
 
 tmp <- quadmap(start = 0.95, rho = 2.99, niter = 500)
 
-plot(tmp, type = "l", main = "Quadratic Map (rho=2.99)", xlab = "Iteration", ylab = "x_n")
-plot(tmp[300:500], type = "l", main = "Last 200 iterations", xlab = "Iteration (300-500)", ylab = "x_n")
+plot(tmp, type = "l")
+plot(tmp[300:500], type = "l")
 
 
 p_9b <- function(start, rho, tolerance = 0.02) {
